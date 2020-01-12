@@ -1,6 +1,7 @@
+import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
-import java.sql.DriverManager
 import java.util.*
+
 
 class DatabaseConnect {
     init {
@@ -13,11 +14,11 @@ class DatabaseConnect {
             user: String,
             password: String
         ): Connection? {
-            return DriverManager.getConnection(
-                url,
-                user,
-                password
-            );
+            val ds = HikariDataSource()
+            ds.jdbcUrl = url
+            ds.username = user
+            ds.password = password
+            return ds.connection
         }
     }
 }

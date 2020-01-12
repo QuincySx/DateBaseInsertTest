@@ -1,6 +1,11 @@
 import java.util.concurrent.Executors
-import kotlin.random.Random
 
+
+private val mSQLHelperThreadLocal: ThreadLocal<SQLHelper> = object : ThreadLocal<SQLHelper>() {
+    override fun initialValue(): SQLHelper {
+        return SQLHelper()
+    }
+}
 
 private val mSQLHelper by lazy {
     SQLHelper()
@@ -12,10 +17,10 @@ fun main() {
     mSQLHelper.createUserTable()
     for (i in 0 until 1000000) {
         mExecutorPool.execute {
-            if (mSQLHelper.randomInstallUser()) {
+            mSQLHelperThreadLocal.get()
+                .randomInstallUser()
+            if (i % 100 == 0) {
                 println("success $i")
-            } else {
-                println("error $i")
             }
         }
     }
