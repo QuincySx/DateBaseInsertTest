@@ -1,3 +1,4 @@
+import generate.PhoneGenerate
 import java.util.concurrent.Executors
 
 
@@ -11,15 +12,15 @@ private val mSQLHelper by lazy {
     SQLHelper()
 }
 
-private val mExecutorPool = Executors.newFixedThreadPool(32)
+private val mExecutorPool = Executors.newFixedThreadPool(16)
 
 fun main() {
     mSQLHelper.createUserTable()
-    for (i in 0 until 1000000) {
+    for (i in 0 until 1500000) {
         mExecutorPool.execute {
             mSQLHelperThreadLocal.get()
                 .randomInstallUser()
-            if (i % 100 == 0) {
+            if (i % 1000 == 0) {
                 println("success $i")
             }
         }

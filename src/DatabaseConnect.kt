@@ -26,7 +26,11 @@ class DatabaseConnect {
 data class User(
     val id: Long,
     val name: String,
-    val age: Int,
+    val sex: Int,
+    val height: Int,
+    val weight: Int,
+    val phone: String,
+    val email: String,
     val address: String,
     val birthday: Date
 )
